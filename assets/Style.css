@@ -1,4 +1,4 @@
-/* Body Styles */
+/* Body stuff */
 
 body {
   font-family: Verdana;
@@ -6,23 +6,23 @@ body {
   margin: 0px;
 }
 
-/* Header Styles  */
+/* Header style  */
 
 header {
   display: flex;
   justify-content: space-between;
   background-color: lightblue;
   color: #ffffff;
-  padding: 3vh;
+  padding: 30px;
 }
 
-/* specify min-width for time element to give enough space for the span inside it to contain 3 digits without visibly moving the "time" text */
+/* size minimum for the time*/
 
 time {
   min-width: 85px;
 }
 
-/* Main Styles */
+/* Main style */
 
 main {
   display: flex;
@@ -30,14 +30,14 @@ main {
   justify-content: center;
 }
 
-/* Button Styles */
+/* Button style */
 
 .button {
   display: block;
   color: #ffffff;
   background-color: lightblue;
   padding: 2vh;
-  border-radius: 8px;
+  border-radius: 2px;
   border: none;
 }
 
@@ -45,15 +45,15 @@ main {
   display: inline-flex;
 }
 
-/* Card Styles */
+/* Card style */
 
 .card {
   max-width: 80%;
-  margin-top: 15vh;
+  margin-top: 5em;
   border: solid;
   border-width: 2px;
-  padding: 5vw;
-  border-radius: 30px;
+  padding: 50px;
+  border-radius: 10px;
   border-color: gray;
   box-shadow: 10px 5px 5px gray;
 }
@@ -75,7 +75,7 @@ main {
   display: none;
 }
 
-/* Score Card Styles */
+/* Score Styles */
 
 .inline-form {
   display: flex;
@@ -86,7 +86,7 @@ main {
 #initials {
   width: 25%;
   margin: 8px;
-  padding: 1vh;
+  padding: 10px;
 }
 
 
