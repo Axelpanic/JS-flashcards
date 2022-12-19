@@ -21,8 +21,8 @@ const questions = [
     },
     {
       questionText:
-        "String values must be enclosed within (    ) when being assigned to variables.",
-      options: ["1. commas", "2. curly brackets", "3. quotes", "4. parentheses"],
+        "String values must be enclosed within _____ when being assigned to variables.",
+      options: ["1. commas", "2. brackets", "3. quotes", "4. parentheses"],
       answer: "3. quotes",
     },
     {
@@ -157,3 +157,110 @@ function endQuiz() {
     score.textContent = time;
   }
 
+const submitButton = document.querySelector("#submit-button");
+const inputElement = document.querySelector("#initials");
+
+//store score
+submitButton.addEventListener("click", storeScore);
+
+function storeScore(event) {
+  //prevent default behaviour of form submission
+  event.preventDefault();
+  if (!inputElement.value) {
+    alert("Please enter your initials before pressing submit!");
+    return;
+  }
+  //leaderboard value
+  let leaderboardItem = {
+    initials: inputElement.value,
+    score: time,
+  };
+  //store leaderboard
+  updateStoredLeaderboard(leaderboardItem);
+
+  //hide the question card, display the leaderboardcard
+  hideCards();
+  leaderboardCard.removeAttribute("hidden");
+
+  renderLeaderboard();
+}
+
+//updates the leaderboard stored in local storage
+function updateStoredLeaderboard(leaderboardItem) {
+  let leaderboardArray = getLeaderboard();
+  //append new leaderboard item to leaderboard array
+  leaderboardArray.push(leaderboardItem);
+  localStorage.setItem("leaderboardArray", JSON.stringify(leaderboardArray));
+}
+//parse for getting leaderboard info from local storage
+function getLeaderboard() {
+  let storedLeaderboard = localStorage.getItem("leaderboardArray");
+  if (storedLeaderboard !== null) {
+    let leaderboardArray = JSON.parse(storedLeaderboard);
+    return leaderboardArray;
+  } else {
+    leaderboardArray = [];
+  }
+  return leaderboardArray;
+}
+
+//display leaderboard correctly
+function renderLeaderboard() {
+  let sortedLeaderboardArray = sortLeaderboard();
+  const highscoreList = document.querySelector("#highscore-list");
+  highscoreList.innerHTML = "";
+  for (let i = 0; i < sortedLeaderboardArray.length; i++) {
+    let leaderboardEntry = sortedLeaderboardArray[i];
+    let newListItem = document.createElement("li");
+    newListItem.textContent =
+      leaderboardEntry.initials + " - " + leaderboardEntry.score;
+    highscoreList.append(newListItem);
+  }
+}
+//sort leaderboard array in decending order
+function sortLeaderboard() {
+  let leaderboardArray = getLeaderboard();
+  if (!leaderboardArray) {
+    return;
+  }
+
+  leaderboardArray.sort(function (a, b) {
+    return b.score - a.score;
+  });
+  return leaderboardArray;
+}
+const clearButton = document.querySelector("#clear-button");
+clearButton.addEventListener("click", clearHighscores);
+
+//clear local storage, empty leaderboard
+function clearHighscores() {
+  localStorage.clear();
+  renderLeaderboard();
+}
+const backButton = document.querySelector("#back-button");
+backButton.addEventListener("click", returnToStart);
+
+//Hide leaderboard card
+function returnToStart() {
+  hideCards();
+  startCard.removeAttribute("hidden");
+}
+
+//use link to view highscores
+const leaderboardLink = document.querySelector("#leaderboard-link");
+leaderboardLink.addEventListener("click", showLeaderboard);
+
+function showLeaderboard() {
+  hideCards();
+  leaderboardCard.removeAttribute("hidden");
+
+  //stop 
+  clearInterval(intervalID);
+
+  //assign undefined to time 
+  time = undefined;
+  displayTime();
+
+  //display leaderboard 
+  renderLeaderboard();
+}
